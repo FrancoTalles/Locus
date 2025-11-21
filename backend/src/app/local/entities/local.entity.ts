@@ -1,10 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Post } from "src/app/post/entities/post.entity";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'local' })
 export class Local {
 
     @PrimaryGeneratedColumn()
-    local_id;
+    local_id: number;
 
     @Column({ type: 'varchar', length: 20 })
     nome: string;
@@ -20,4 +21,10 @@ export class Local {
     
     @Column({ type: 'varchar', length: 50 })
     longitude: string;
+
+    @CreateDateColumn() 
+    created_at: Date
+
+    @OneToMany(() => Post, (post) => post.local)
+    posts: Post[];
 }

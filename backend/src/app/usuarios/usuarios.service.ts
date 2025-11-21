@@ -1,29 +1,44 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Usuario } from './entities/usuario.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsuariosService {
+  constructor(
+    @InjectRepository(Usuario)
+    private readonly usuarioRepository: Repository<Usuario>
+  ) { }
 
-
-  // Precisa trabalahar as regras de negócio..
   create(createUsuarioDto: CreateUsuarioDto) {
-    return 'Usuário criado!';
+    const usuario = this.usuarioRepository.create(createUsuarioDto);
+    return this.usuarioRepository.save(usuario);
   }
 
   findAll() {
-    return `Lista de todos o usuários`;
+    return this.usuarioRepository.find();
   }
 
-  findOne(id: number) {
-    return `Listando um usuário por id: #${id}`; 
+  async findOne(usuario_id: number) {
+    const usuario = await this.usuarioRepository.findOne({ where: { usuario_id } });
+    if (!usuario) {
+      throw new NotFoundException(`Usuario com ID ${usuario_id} não encontrado.`);
+    }
+    return usuario;
   }
 
-  update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
-    return `Atualizando o usuario: #${id}`;
+  async update(usuario_id: number, updateUsuarioDto: UpdateUsuarioDto) {
+    const usuario = await this.findOne(usuario_id);
+    this.usuarioRepository.merge(usuario, updateUsuarioDto);
+    return this.usuarioRepository.save(usuario);
   }
 
-  remove(id: number) {
-    return `Deletando o usuario: #${id}`;
+  async remove(usuario_id: number) {
+    const result = await this.usuarioRepository.delete(usuario_id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Usuario com ID ${usuario_id} não encontrado para exclusão.`);
+    }
   }
 }
