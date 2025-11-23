@@ -1,6 +1,8 @@
+import { Comentario } from "src/app/comentarios/entities/comentario.entity";
+import { Curtidas } from "src/app/curtidas/entities/curtidas.entity";
 import { Local } from "src/app/local/entities/local.entity";
 import { Usuario } from "src/app/usuarios/entities/usuario.entity";
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'post' })
 export class Post {
@@ -14,7 +16,7 @@ export class Post {
     @Column({ type: 'varchar', length: 50 })
     imagem: string;
 
-    @Column()
+    @Column()   
     local_id: number;
 
     @ManyToOne(() => Local)
@@ -33,4 +35,10 @@ export class Post {
 
     @UpdateDateColumn() 
     updated_at: Date
+
+    @OneToMany(() => Comentario, (comentario) => comentario.post)
+    comentarios: Comentario[]
+
+    @OneToMany(() => Curtidas, (curtidas) => curtidas.post)
+    curtidas: Curtidas[]
 }

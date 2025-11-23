@@ -1,7 +1,8 @@
-import { BeforeInsert, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
-import { randomUUID } from "node:crypto"
-import { timestamp } from "rxjs"
+import { Comentario } from "src/app/comentarios/entities/comentario.entity";
+import { Curtidas } from "src/app/curtidas/entities/curtidas.entity";
 import { Post } from "src/app/post/entities/post.entity";
+import { Seguidores } from "src/app/seguidores/entities/seguidores.entity";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'usuario' })
 export class Usuario {
@@ -29,4 +30,16 @@ export class Usuario {
 
     @OneToMany(() => Post, (post) => post.usuario)
     posts: Post[]
+
+    @OneToMany(() => Comentario, (comentario) => comentario.usuario)
+    comentarios: Comentario[]
+
+    @OneToMany(() => Seguidores, (seguidores) => seguidores.seguidor)
+    seguindo: Seguidores[];
+
+    @OneToMany(() => Seguidores, (seguidores) => seguidores.seguido)
+    seguidores: Seguidores[];
+
+    @OneToMany(() => Curtidas, (curtidas) => curtidas.usuario)
+    curtidas: Curtidas[]
 }

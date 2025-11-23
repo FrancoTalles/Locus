@@ -9,7 +9,6 @@ export class CreatePostDto {
     descricao: string;
 
     @ApiProperty()
-    @IsNotEmpty({ message: 'A imagem é obrigatória.' })
     @IsString()
     @MaxLength(50)
     imagem: string;

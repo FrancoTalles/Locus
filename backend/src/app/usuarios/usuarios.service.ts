@@ -24,7 +24,7 @@ export class UsuariosService {
   async findOne(usuario_id: number) {
     const usuario = await this.usuarioRepository.findOne({ where: { usuario_id } });
     if (!usuario) {
-      throw new NotFoundException(`Usuario com ID ${usuario_id} não encontrado.`);
+      throw new NotFoundException(`Usuario não encontrado.`);
     }
     return usuario;
   }
@@ -38,7 +38,7 @@ export class UsuariosService {
   async remove(usuario_id: number) {
     const result = await this.usuarioRepository.delete(usuario_id);
     if (result.affected === 0) {
-      throw new NotFoundException(`Usuario com ID ${usuario_id} não encontrado para exclusão.`);
+      throw new NotFoundException(`Usuario não encontrado para exclusão.`);
     }
   }
 }

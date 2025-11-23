@@ -5,7 +5,7 @@ import { UpdateLocalDto } from './dto/update-local.dto';
 import { Local } from './entities/local.entity';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('local')
+@ApiTags('LOCAL')
 @Controller('local')
 export class LocalController {
   constructor(private readonly localService: LocalService) {}
