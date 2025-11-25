@@ -3,14 +3,6 @@ services:
     build: .
     container_name: minha-api-nest
     restart: always
-    ports:
-      - "80:3000"
+    network_mode: "host"
     volumes:
       - ./database.sqlite:/app/database.sqlite
-
-
-networks:
-  default:
-    driver: bridge
-    driver_opts:
-      com.docker.network.driver.mtu: 1400
