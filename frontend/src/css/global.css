@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  background: radial-gradient(
+    circle at center,
+    rgba(40, 160, 255, 0.28) 0%,
+    rgba(20, 40, 70, 0.8) 45%,
+    #020617 90%
+  );
+  background-attachment: fixed;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+}
