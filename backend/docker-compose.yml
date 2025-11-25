@@ -7,3 +7,10 @@ services:
       - "80:3000"
     volumes:
       - ./database.sqlite:/app/database.sqlite
+
+
+networks:
+  default:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: 1400
