@@ -1,0 +1,9 @@
+services:
+  api:
+    build: .
+    container_name: minha-api-nest
+    restart: always
+    ports:
+      - "80:3000"
+    volumes:
+      - ./database.sqlite:/app/database.sqlite
